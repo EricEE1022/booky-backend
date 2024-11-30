@@ -1,8 +1,9 @@
 import express from "express";
-import path from "path";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors"; // Ensure cors is properly imported
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 // Import your routes
 // import seedRouter from "./routes/seedRoutes.js";
@@ -45,11 +46,22 @@ app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 
 // Serve frontend static files
-const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "/frontend/build")));
-app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "/frontend/build/index.html"))
-);
+// const __dirname = path.resolve();
+// app.use(express.static(path.join(__dirname, "/frontend/build")));
+// app.get("*", (req, res) =>
+//   res.sendFile(path.join(__dirname, "/frontend/build/index.html"))
+// );
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, '../frontend', 'build', 'index.html'))
+  );
+}
+
 
 // Error handler
 app.use((err, req, res, next) => {
