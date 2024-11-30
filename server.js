@@ -55,10 +55,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
+  app.use(express.static(path.join(__dirname, 'frontend/build')));
 
   app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, '../frontend', 'build', 'index.html'))
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
   );
 }
 
@@ -71,5 +71,6 @@ app.use((err, req, res, next) => {
 // Start server
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  // console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at ${port}`);
 });
