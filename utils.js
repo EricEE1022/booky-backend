@@ -6,7 +6,7 @@ export const baseUrl = () =>
     ? process.env.BASE_URL
     : process.env.NODE_ENV !== 'production'
     ? 'http://localhost:4000'
-    : 'https://booky-jade.vercel.app';
+    : 'https://yourdomain.com';
 
 export const generateToken = (user) => {
   return jwt.sign(
@@ -19,7 +19,7 @@ export const generateToken = (user) => {
     process.env.JWT_SECRET,
     {
       expiresIn: '30d',
-    }
+    },
   );
 };
 
@@ -76,7 +76,7 @@ export const payOrderEmailTemplate = (order) => {
     <td align="center">${item.quantity}</td>
     <td align="right"> $${item.price.toFixed(2)}</td>
     </tr>
-  `
+  `,
     )
     .join('\n')}
   </tbody>

@@ -1,12 +1,8 @@
 import express from "express";
+import path from "path";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import cors from "cors"; // Ensure cors is properly imported
-import { fileURLToPath } from 'url';
-import path from 'path';
-
-// Import your routes
-// import seedRouter from "./routes/seedRoutes.js";
+import cors from "cors"; 
 import productRouter from "./routes/productRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
@@ -27,7 +23,7 @@ mongoose
 const app = express();
 
 // Middleware
-app.use(cors()); // Add CORS middleware early to handle cross-origin requests
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -40,28 +36,16 @@ app.get("/api/keys/google", (req, res) => {
 });
 
 app.use("/api/upload", uploadRouter);
-// app.use("/api/seed", seedRouter);
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 
 // Serve frontend static files
-// const __dirname = path.resolve();
-// app.use(express.static(path.join(__dirname, "/frontend/build")));
-// app.get("*", (req, res) =>
-//   res.sendFile(path.join(__dirname, "/frontend/build/index.html"))
-// );
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'frontend/build')));
-
-  app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
-  );
-}
-
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "/frontend/build")));
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "/frontend/build/index.html"))
+);
 
 // Error handler
 app.use((err, req, res, next) => {
@@ -71,6 +55,5 @@ app.use((err, req, res, next) => {
 // Start server
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
-  // console.log(`Server running at http://localhost:${port}`);
-  console.log(`Server running at ${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });

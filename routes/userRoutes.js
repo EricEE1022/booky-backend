@@ -76,7 +76,7 @@ userRouter.post(
         .messages()
         .send(
           {
-            from: 'Booky <Booky@mg.yourdomain.com>',
+            from: 'Booky <booky@mg.yourdomain.com>',
             to: `${user.name} <${user.email}>`,
             subject: `Reset Password`,
             html: ` 
